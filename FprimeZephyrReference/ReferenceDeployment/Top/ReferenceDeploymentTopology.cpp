@@ -10,7 +10,8 @@
 
 // Necessary project-specified types
 #include <Fw/Types/MallocAllocator.hpp>
-
+#include <fprime-zephyr/Drv/ZephyrGpioDriver/ZephyrGpioDriver.hpp>
+#include <Fw/Logger/Logger.hpp>
 // Allows easy reference to objects in FPP/autocoder required namespaces
 using namespace ReferenceDeployment;
 
@@ -32,6 +33,8 @@ Svc::RateGroupDriver::DividerSet rateGroupDivisorsSet{
     }
 };
 
+//static const struct gpio_dt_spec my_gpio = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
+
 // Rate groups may supply a context token to each of the attached children whose purpose is set by the project. The
 // reference topology sets each token to zero as these contexts are unused in this project.
 U32 rateGroup10HzContext[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {getRateGroupPeriod(10)};
@@ -45,6 +48,14 @@ U32 rateGroup1HzContext[Svc::ActiveRateGroup::CONNECTION_COUNT_MAX] = {getRateGr
  * desired, but is extracted here for clarity.
  */
 void configureTopology() {
+
+    #undef GPIO_OUTPUT
+    // Os::File::Status status =
+    //     gpioDriver.open(my_gpio, Zephyr::ZephyrGpioDriver::GpioConfiguration::OUT);
+    // if (status != Os::File::Status::OP_OK) {
+    //     Fw::Logger::log("[ERROR] Failed to open GPIO pin\n");
+    // }
+
     // Rate group driver needs a divisor list
     rateGroupDriver.configure(rateGroupDivisorsSet);
     // Rate groups require context arrays.

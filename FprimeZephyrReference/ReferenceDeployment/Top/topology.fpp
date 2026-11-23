@@ -28,7 +28,8 @@ module ReferenceDeployment {
     instance comDriver
     instance nullPrmDb
     instance touchReset
-
+    instance gpioDriver
+    #instance led
   # ----------------------------------------------------------------------
   # Pattern graph specifiers
   # ----------------------------------------------------------------------
@@ -95,7 +96,7 @@ module ReferenceDeployment {
     }
 
     connections ReferenceDeployment {
-
+      #led.gpioSet -> gpioDriver.gpioWrite
     }
 
   }
